@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 
-public class EqmServerHandler1 extends SimpleChannelInboundHandler<byte[]> {
+public class ClientServerHandler extends SimpleChannelInboundHandler<byte[]> {
 
 
 
 
-    private static final Logger logger = LoggerFactory.getLogger(EqmServerHandler1.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientServerHandler.class);
 
 
 

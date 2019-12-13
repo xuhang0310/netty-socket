@@ -9,6 +9,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import lombok.SneakyThrows;
+
 public class HelloClient {
 
     public void connect(String host, int port) throws Exception {
@@ -21,7 +23,7 @@ public class HelloClient {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
 
-                            ch.pipeline().addLast(new SocketEncoder()).addLast(new SocketDecoder()).addLast(new EqmServerHandler1());
+                            ch.pipeline().addLast(new SocketEncoder()).addLast(new SocketDecoder()).addLast(new ClientServerHandler());
                         }
                     });
 
@@ -36,7 +38,15 @@ public class HelloClient {
     }
 
     public static void main(String[] args) throws Exception {
-        HelloClient client = new HelloClient();
-        client.connect("127.0.0.1", 6789);
+        for (int i=0;i<100;i++){
+            new Thread(new Runnable() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    HelloClient client = new HelloClient();
+                    client.connect("127.0.0.1", 6789);
+                }
+            }).start();
+        }
     }
 }
