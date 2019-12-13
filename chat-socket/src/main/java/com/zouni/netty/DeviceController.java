@@ -2,7 +2,9 @@ package com.zouni.netty;
 
 
 import com.zouni.netty.attribute.SocketContext;
+import com.zouni.chat.service.ChatService;
 import com.zouni.netty.base.model.ChatMessage;
+import com.zouni.netty.util.SpringApplicationContextUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import org.apache.commons.lang3.StringUtils;
@@ -37,9 +39,8 @@ public class DeviceController {
         socketContext.setCmdCHC( ctx );
         if(msg!=null){
             ctx.channel().attr(attrContext).set(socketContext);
-            ctx.channel().writeAndFlush(msg);
-            //将设备编号存入缓存信息中
-            SocketContextMap.getInstance().put(from, socketContext);
+            ChatService chatService=SpringApplicationContextUtil.getApplicationContext().getBean(ChatService.class);
+            chatService.register(socketContext,msg);
         }
 
 

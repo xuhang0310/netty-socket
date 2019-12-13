@@ -3,6 +3,7 @@ package com;
 import com.zouni.netty.base.model.ChatMessage;
 import com.zouni.netty.protobuf.nano.ProtoMsg;
 import com.zouni.netty.util.ByteUtil;
+import com.zouni.netty.util.FrameUtils;
 import com.zouni.netty.util.ProtobuffUtil;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -10,25 +11,22 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.Calendar;
 
-public class HelloClientIntHandler extends ChannelInboundHandlerAdapter {
+public class HelloClientIntHandler extends SimpleChannelInboundHandler<byte[]> {
 
     private static Log logger = LogFactory.getLog(HelloClientIntHandler.class);
 
-    // 接收server端的消息，并打印出来
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        logger.info("HelloClientIntHandler.channelRead");
-        ByteBuf result = (ByteBuf) msg;
-        byte[] result1 = new byte[result.readableBytes()];
-        result.readBytes(result1);
-        System.out.println("Server said:" + new String(result1));
-        result.release();
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
+        //ChatMessage chatMessage= FrameUtils.getMessageInfo(bytes);
+        System.out.println(bytes);
     }
 
     // 连接成功后，向server发送消息
@@ -52,11 +50,7 @@ public class HelloClientIntHandler extends ChannelInboundHandlerAdapter {
         System.out.println(bytes.length);
         byte [] length= ByteUtil.intByteArray(bytes.length);
         byte [] msgByte=ByteUtil.addBytes(length,bytes);
-        for(int i=0;i<100;i++){
-            ctx.write(msgByte);
-            Thread.sleep(100);
-        }
-
+        ctx.write(msgByte);
         ctx.flush();
     }
 }
