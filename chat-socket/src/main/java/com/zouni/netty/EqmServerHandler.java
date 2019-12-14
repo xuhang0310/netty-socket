@@ -32,12 +32,14 @@ public class EqmServerHandler extends SimpleChannelInboundHandler<byte[]> {
      */
     private AttributeKey<SocketContext> attrDEqmContext;
 
+    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception{
         logger.warn("channelActive被触发，已经有设备连接上采集软件");
         attrDEqmContext = AttributeKey.valueOf(String.valueOf( UUID.randomUUID()));
         deviceController=new DeviceController(attrDEqmContext);
     }
 
+    @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] msg) throws Exception {
         //logger.warn("channelRead0进入了");
         ChatMessage chatMessage= FrameUtils.getMessageInfo(msg);

@@ -25,13 +25,14 @@ public class ClientServerHandler extends SimpleChannelInboundHandler<byte[]> {
 
 
 
+    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception{
         logger.warn("channelActive被触发，已经有设备连接上采集软件");
         logger.info("HelloClientIntHandler.channelActive");
         ChatMessage p = new ChatMessage();
         p.setContent("张三");
         p.setMsgId(30L);
-        p.setFrom("xupei0310@163.com");
+        p.setFrom("sss@163.com");
         p.setTo("kkk");
         p.setFromNick("--");
         p.setUrl("");
@@ -49,6 +50,7 @@ public class ClientServerHandler extends SimpleChannelInboundHandler<byte[]> {
 
     }
 
+    @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] msg) throws Exception {
         //logger.warn("channelRead0进入了");
         System.out.println("-----channelRead0进入了--------");
@@ -66,6 +68,7 @@ public class ClientServerHandler extends SimpleChannelInboundHandler<byte[]> {
     }
     private int lossConnectCount = 0;
 
+    @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
 
 

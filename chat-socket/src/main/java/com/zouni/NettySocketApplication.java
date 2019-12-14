@@ -18,12 +18,7 @@ public class NettySocketApplication {
         ApplicationContext run =SpringApplication.run(NettySocketApplication.class,args);
         SpringApplicationContextUtil.setApplicationContext(run);
 
-        StringRedisTemplate redisTemplate=SpringApplicationContextUtil.getApplicationContext().getBean(StringRedisTemplate.class);
-        redisTemplate.opsForValue().set("11","33");
-        String abc=(String)redisTemplate.opsForValue().get("11");
-        System.out.println(abc);
 
-        ChatService chat=run.getBean(ChatService.class);
        // chat.register(new ChatMessage());
     }
 }
