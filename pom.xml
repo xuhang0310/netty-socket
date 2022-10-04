@@ -44,7 +44,7 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <javadoc.version>3.0.0</javadoc.version>
         <grpc.version>1.18.0</grpc.version>
-        <protobuf-java.version>3.5.1</protobuf-java.version>
+        <protobuf-java.version>3.16.3</protobuf-java.version>
         <protobuf-javanano.version>3.1.0</protobuf-javanano.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
